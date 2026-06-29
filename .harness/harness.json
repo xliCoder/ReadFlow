@@ -1,0 +1,13 @@
+{
+  "project": "ReadFlow",
+  "stack": "python",
+  "created": "2026-06-29T00:00:00Z",
+  "version": "3.6.0",
+  "git_identity": {
+    "user_name": "xliCoder",
+    "user_email": "primeshift@163.com",
+    "ssh_key": "github.com",
+    "ssh_host": "github.com"
+  },
+  "team_structure": null
+}

@@ -1,0 +1,122 @@
+{
+  "project": "ReadFlow",
+  "created": "2026-06-29T00:00:00Z",
+  "total_features": 5,
+  "passing": 0,
+  "features": [
+    {
+      "id": "F001",
+      "description": "PDF upload and parsing endpoint",
+      "priority": 1,
+      "status": "pending",
+      "scope": [
+        "src/upload/",
+        "src/pdf/",
+        "tests/upload/",
+        "tests/pdf/"
+      ],
+      "depends_on": [],
+      "assigned_to": null,
+      "test_file": null,
+      "coverage": null,
+      "notes": null,
+      "correction_cycles": 0,
+      "scope_expansions": [],
+      "approaches_tried": [],
+      "failure_reason": null,
+      "discovered_via": null
+    },
+    {
+      "id": "F002",
+      "description": "Document chunking and embedding pipeline",
+      "priority": 2,
+      "status": "pending",
+      "scope": [
+        "src/indexing/",
+        "src/embeddings/",
+        "tests/indexing/"
+      ],
+      "depends_on": [
+        "F001"
+      ],
+      "assigned_to": null,
+      "test_file": null,
+      "coverage": null,
+      "notes": null,
+      "correction_cycles": 0,
+      "scope_expansions": [],
+      "approaches_tried": [],
+      "failure_reason": null,
+      "discovered_via": null
+    },
+    {
+      "id": "F003",
+      "description": "Retrieval Q&A API endpoint",
+      "priority": 3,
+      "status": "pending",
+      "scope": [
+        "src/retrieval/",
+        "src/qa/",
+        "tests/retrieval/",
+        "tests/qa/"
+      ],
+      "depends_on": [
+        "F002"
+      ],
+      "assigned_to": null,
+      "test_file": null,
+      "coverage": null,
+      "notes": null,
+      "correction_cycles": 0,
+      "scope_expansions": [],
+      "approaches_tried": [],
+      "failure_reason": null,
+      "discovered_via": null
+    },
+    {
+      "id": "F004",
+      "description": "Web frontend for upload and chat",
+      "priority": 4,
+      "status": "pending",
+      "scope": [
+        "frontend/"
+      ],
+      "depends_on": [
+        "F001",
+        "F003"
+      ],
+      "assigned_to": null,
+      "test_file": null,
+      "coverage": null,
+      "notes": null,
+      "correction_cycles": 0,
+      "scope_expansions": [],
+      "approaches_tried": [],
+      "failure_reason": null,
+      "discovered_via": null
+    },
+    {
+      "id": "F005",
+      "description": "Document and session management",
+      "priority": 5,
+      "status": "pending",
+      "scope": [
+        "src/models/",
+        "src/db/",
+        "tests/models/"
+      ],
+      "depends_on": [
+        "F001"
+      ],
+      "assigned_to": null,
+      "test_file": null,
+      "coverage": null,
+      "notes": null,
+      "correction_cycles": 0,
+      "scope_expansions": [],
+      "approaches_tried": [],
+      "failure_reason": null,
+      "discovered_via": null
+    }
+  ]
+}

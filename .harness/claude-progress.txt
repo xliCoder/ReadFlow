@@ -1,0 +1,11 @@
+# Claude Progress Log
+# Project: ReadFlow
+# Created: 2026-06-29T00:00:00Z
+
+## Session 1 - Initialization
+- Created harness scaffolding
+- Detected stack: Python/FastAPI (Python backend for PDF + RAG)
+- Git identity: xliCoder <primeshift@163.com> via github.com SSH
+- SSH identity verified with GitHub
+- Quality gate hooks installed and verified
+- Initial features defined: F001 (PDF upload/parse), F002 (chunking/embedding), F003 (retrieval Q&A), F004 (web frontend), F005 (document/session management)
