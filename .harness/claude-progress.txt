@@ -9,3 +9,18 @@
 - SSH identity verified with GitHub
 - Quality gate hooks installed and verified
 - Initial features defined: F001 (PDF upload/parse), F002 (chunking/embedding), F003 (retrieval Q&A), F004 (web frontend), F005 (document/session management)
+
+## Session 2 - 2026-07-01
+- Feature: F001 - PDF upload and parsing endpoint
+- Status: complete (passing)
+- Tests: 15 passing, 0 failing
+- Coverage: 98% on touched code
+- Decisions:
+  - Established `readflow/api/app/` structure per CLAUDE.md
+  - Used pypdf wrapped in `asyncio.to_thread` for async PDF parsing
+  - Used SQLAlchemy 2.0 async with aiosqlite in-memory DB for tests
+  - Pydantic `validation_alias='id'` maps ORM id to API `source_id`
+  - Root `pyproject.toml` mirrors backend deps so `.harness/init.sh` works without `make`
+- Updated `.harness/features.json` F001 scope from `src/upload/` to actual paths; set status to passing
+- Next: F002 - Document chunking and embedding pipeline
+- Blockers: none
