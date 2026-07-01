@@ -2,7 +2,7 @@
   "project": "ReadFlow",
   "created": "2026-06-29T00:00:00Z",
   "total_features": 5,
-  "passing": 1,
+  "passing": 3,
   "features": [
     {
       "id": "F001",
@@ -46,22 +46,35 @@
       "id": "F002",
       "description": "Document chunking and embedding pipeline",
       "priority": 2,
-      "status": "pending",
+      "status": "passing",
       "scope": [
-        "src/indexing/",
-        "src/embeddings/",
-        "tests/indexing/"
+        "readflow/api/app/models/content.py",
+        "readflow/api/app/schemas/content.py",
+        "readflow/api/app/routers/content.py",
+        "readflow/api/app/services/chunk_service.py",
+        "readflow/api/app/services/vector_service.py",
+        "readflow/api/app/core/one_api_client.py",
+        "readflow/api/app/config.py",
+        "readflow/api/app/tests/unit/test_chunk_service.py",
+        "readflow/api/app/tests/unit/test_vector_service.py",
+        "readflow/api/app/tests/integration/test_index_endpoint.py",
+        "readflow/api/pyproject.toml"
       ],
       "depends_on": [
         "F001"
       ],
       "assigned_to": null,
-      "test_file": null,
-      "coverage": null,
-      "notes": null,
+      "test_file": "readflow/api/app/tests/integration/test_index_endpoint.py",
+      "coverage": 100,
+      "notes": "Adds Chunk model, recursive-character chunking service, One API embedding client, Milvus vector service, and POST /api/v1/content/{source_id}/index endpoint. F001 extended to persist full extracted_text.",
       "correction_cycles": 0,
       "scope_expansions": [],
-      "approaches_tried": [],
+      "approaches_tried": [
+        "Recursive-character chunking: paragraphs first, then sentence/space boundaries, final character fallback",
+        "One API embed wrapper via httpx.AsyncClient with Bearer token auth",
+        "Vector service abstraction over pymilvus.MilvusClient with lazy collection creation",
+        "Coverage concurrency fix: set coverage.run.concurrency = ['thread', 'greenlet'] to correctly trace async FastAPI routes"
+      ],
       "failure_reason": null,
       "discovered_via": null
     },
@@ -69,23 +82,38 @@
       "id": "F003",
       "description": "Retrieval Q&A API endpoint",
       "priority": 3,
-      "status": "pending",
+      "status": "passing",
       "scope": [
-        "src/retrieval/",
-        "src/qa/",
-        "tests/retrieval/",
-        "tests/qa/"
+        "readflow/api/app/main.py",
+        "readflow/api/app/core/one_api_client.py",
+        "readflow/api/app/services/context_builder.py",
+        "readflow/api/app/services/chat_service.py",
+        "readflow/api/app/services/vector_service.py",
+        "readflow/api/app/routers/chat.py",
+        "readflow/api/app/schemas/chat.py",
+        "readflow/api/app/config.py",
+        "readflow/api/app/tests/unit/test_context_builder.py",
+        "readflow/api/app/tests/unit/test_chat_service.py",
+        "readflow/api/app/tests/unit/test_chat_router.py",
+        "readflow/api/app/tests/unit/test_one_api_client.py",
+        "readflow/api/app/tests/integration/test_chat_endpoint.py",
+        "readflow/api/pyproject.toml"
       ],
       "depends_on": [
         "F002"
       ],
       "assigned_to": null,
-      "test_file": null,
-      "coverage": null,
-      "notes": null,
+      "test_file": "readflow/api/app/tests/integration/test_chat_endpoint.py",
+      "coverage": 100,
+      "notes": "Adds RAG Q&A: question embedding, vector search via Milvus, context assembly, streaming chat through One API, and POST /api/v1/chat SSE endpoint.",
       "correction_cycles": 0,
       "scope_expansions": [],
-      "approaches_tried": [],
+      "approaches_tried": [
+        "ContextBuilder embeds the question and queries Milvus via VectorService.search",
+        "ChatService builds system/user messages and streams One API chat.completions",
+        "Router pre-builds context to surface embedding/retrieval errors as HTTP 502; generator-level errors emitted as SSE error events",
+        "Mock httpx.AsyncClient.stream for unit-testing OneAPIClient.stream_chat without network"
+      ],
       "failure_reason": null,
       "discovered_via": null
     },

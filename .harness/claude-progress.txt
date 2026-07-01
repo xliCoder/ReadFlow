@@ -10,6 +10,39 @@
 - Quality gate hooks installed and verified
 - Initial features defined: F001 (PDF upload/parse), F002 (chunking/embedding), F003 (retrieval Q&A), F004 (web frontend), F005 (document/session management)
 
+## Session 4 - 2026-07-02
+- Feature: F003 - Retrieval Q&A API endpoint
+- Status: complete (passing)
+- Tests: 61 passing, 0 failing
+- Coverage: 100% on touched code
+- Decisions:
+  - Added `ContextBuilder` to embed questions, search Milvus, and format top-k chunks
+  - Added `ChatService` to build system/user messages and stream One API chat completions
+  - Added `POST /api/v1/chat` endpoint returning `text/event-stream`
+  - Router pre-builds context so embedding/retrieval errors become HTTP 502; LLM stream errors become SSE `event: error`
+  - Extended `OneAPIClient` with `stream_chat()` using `httpx.AsyncClient.stream`
+  - Added `VectorService.search()` with source_id filter and quote escaping
+  - Added `config.chat_model` for chat model selection
+- Updated `.harness/features.json` F003 scope from `src/retrieval/` to actual paths; set status to passing
+- Next: F004 (web frontend) or F005 (document/session management)
+- Blockers: none
+
+## Session 3 - 2026-07-01
+- Feature: F002 - Document chunking and embedding pipeline
+- Status: complete (passing)
+- Tests: 38 passing, 0 failing
+- Coverage: 100% on touched code
+- Decisions:
+  - Extended `ContentSource` to persist full `extracted_text` (F002 dependency on F001 data model)
+  - Added `Chunk` SQLAlchemy model and `app/services/chunk_service.py` with recursive-character splitting
+  - Added `app/core/one_api_client.py` for async OpenAI-compatible embeddings
+  - Added `app/services/vector_service.py` wrapping `pymilvus.MilvusClient`
+  - Added `POST /api/v1/content/{source_id}/index` endpoint that chunks, embeds, persists chunks, and inserts vectors
+  - Fixed FastAPI async coverage tracking by setting `coverage.run.concurrency = ['thread', 'greenlet']`
+- Updated `.harness/features.json` F002 status to passing; scope realigned from `src/indexing/` to actual paths
+- Next: F003 - Retrieval Q&A API endpoint
+- Blockers: none
+
 ## Session 2 - 2026-07-01
 - Feature: F001 - PDF upload and parsing endpoint
 - Status: complete (passing)
