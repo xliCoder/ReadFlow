@@ -46,15 +46,38 @@
       "id": "F002",
       "description": "Document chunking and embedding pipeline",
       "priority": 2,
-      "status": "pending",
+      "status": "passing",
       "scope": [
-        "src/indexing/",
-        "src/embeddings/",
-        "tests/indexing/"
+        "readflow/api/app/models/content.py",
+        "readflow/api/app/schemas/content.py",
+        "readflow/api/app/routers/content.py",
+        "readflow/api/app/services/chunk_service.py",
+        "readflow/api/app/services/vector_service.py",
+        "readflow/api/app/core/one_api_client.py",
+        "readflow/api/app/config.py",
+        "readflow/api/app/tests/unit/test_chunk_service.py",
+        "readflow/api/app/tests/unit/test_vector_service.py",
+        "readflow/api/app/tests/integration/test_index_endpoint.py",
+        "readflow/api/pyproject.toml"
       ],
       "depends_on": [
         "F001"
       ],
+      "assigned_to": null,
+      "test_file": "readflow/api/app/tests/integration/test_index_endpoint.py",
+      "coverage": 100,
+      "notes": "Adds Chunk model, recursive-character chunking service, One API embedding client, Milvus vector service, and POST /api/v1/content/{source_id}/index endpoint. F001 extended to persist full extracted_text.",
+      "correction_cycles": 0,
+      "scope_expansions": [],
+      "approaches_tried": [
+        "Recursive-character chunking: paragraphs first, then sentence/space boundaries, final character fallback",
+        "One API embed wrapper via httpx.AsyncClient with Bearer token auth",
+        "Vector service abstraction over pymilvus.MilvusClient with lazy collection creation",
+        "Coverage concurrency fix: set coverage.run.concurrency = ['thread', 'greenlet'] to correctly trace async FastAPI routes"
+      ],
+      "failure_reason": null,
+      "discovered_via": null
+    },
       "assigned_to": null,
       "test_file": null,
       "coverage": null,
