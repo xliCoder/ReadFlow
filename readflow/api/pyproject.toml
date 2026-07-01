@@ -14,6 +14,7 @@ dependencies = [
     'pypdf>=4.0.0',
     'python-multipart>=0.0.9',
     'httpx>=0.26.0',
+    'pymilvus>=2.3.0',
 ]
 
 [project.optional-dependencies]
@@ -52,6 +53,7 @@ addopts = '--cov=app --cov-report=term-missing --cov-fail-under=95'
 [tool.coverage.run]
 source = ['app']
 omit = ['app/tests/*']
+concurrency = ['thread', 'greenlet']
 
 [tool.coverage.report]
 fail_under = 95

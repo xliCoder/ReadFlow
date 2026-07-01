@@ -24,6 +24,14 @@ class ContentParseResult(BaseModel):
     page_count: int
     total_chars: int
     extracted_text_preview: str
+    extracted_text: str
     status: str = 'parsed'
     message: str = ''
     file_size_bytes: int | None = None
+
+
+class IndexResponse(BaseModel):
+    source_id: str
+    status: str
+    chunk_count: int
+    message: str = ''

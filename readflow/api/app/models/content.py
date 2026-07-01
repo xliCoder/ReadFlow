@@ -20,6 +20,7 @@ class ContentSource(Base):
     page_count: Mapped[int | None] = mapped_column(Integer, nullable=True)
     total_chars: Mapped[int | None] = mapped_column(Integer, nullable=True)
     extracted_text_preview: Mapped[str | None] = mapped_column(Text, nullable=True)
+    extracted_text: Mapped[str | None] = mapped_column(Text, nullable=True)
     status: Mapped[str] = mapped_column(String(20), default='pending')
     file_size_bytes: Mapped[int | None] = mapped_column(Integer, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
@@ -28,3 +29,18 @@ class ContentSource(Base):
         default=datetime.utcnow,
         onupdate=datetime.utcnow,
     )
+
+
+class Chunk(Base):
+    __tablename__ = 'chunks'
+
+    id: Mapped[str] = mapped_column(
+        String(36),
+        primary_key=True,
+        default=lambda: str(uuid.uuid4()),
+    )
+    source_id: Mapped[str] = mapped_column(String(36), nullable=False, index=True)
+    chunk_index: Mapped[int] = mapped_column(Integer, nullable=False)
+    text: Mapped[str] = mapped_column(Text, nullable=False)
+    token_count: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)

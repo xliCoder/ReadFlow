@@ -37,6 +37,7 @@ class PDFService:
                 page_count=page_count,
                 total_chars=total_chars,
                 extracted_text_preview=preview,
+                extracted_text=full_text,
             )
         except Exception as exc:
             raise PDFParseError(f"Failed to parse PDF: {exc}") from exc
