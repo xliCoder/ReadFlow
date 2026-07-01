@@ -20,6 +20,7 @@ class Settings(BaseSettings):
     one_api_url: str = 'http://localhost:3000'
     one_api_key: str | None = None
     embedding_model: str = 'text-embedding-3-small'
+    chat_model: str = 'gpt-4o-mini'
 
     max_upload_size_bytes: int = 50 * 1024 * 1024  # 50 MB
     chunk_size: int = 1000

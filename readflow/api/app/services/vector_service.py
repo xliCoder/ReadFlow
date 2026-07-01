@@ -60,3 +60,45 @@ class VectorService:
             raise VectorServiceError(f'Failed to insert chunks: {exc}') from exc
 
         return len(records)
+
+    def search(
+        self,
+        source_id: str,
+        query_embedding: list[float],
+        top_k: int = 5,
+    ) -> list[dict]:
+        client = self._get_client()
+
+        if not client.has_collection(self.collection_name):
+            return []
+
+        try:
+            results = client.search(
+                self.collection_name,
+                data=[query_embedding],
+                filter=self._format_filter(source_id),
+                limit=top_k,
+                output_fields=['source_id', 'chunk_index', 'text'],
+            )
+        except Exception as exc:
+            raise VectorServiceError(f'Failed to search chunks: {exc}') from exc
+
+        if not results:
+            return []
+
+        flattened = []
+        for group in results:
+            for item in group:
+                entity = item.get('entity', {})
+                flattened.append({
+                    'source_id': entity.get('source_id'),
+                    'chunk_index': entity.get('chunk_index'),
+                    'text': entity.get('text'),
+                    'distance': item.get('distance'),
+                })
+        return flattened
+
+    @staticmethod
+    def _format_filter(source_id: str) -> str:
+        escaped = source_id.replace('"', '\\"')
+        return f'source_id == "{escaped}"'
